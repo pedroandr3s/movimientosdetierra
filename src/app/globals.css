@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Azul marino (estructura) */
+  --color-navy-50: #eef3f9;
+  --color-navy-100: #d9e4f1;
+  --color-navy-200: #b3c8e0;
+  --color-navy-700: #1b4478;
+  --color-navy-800: #12325b;
+  --color-navy-900: #0d2542;
+  --color-navy-950: #081a30;
+
+  /* Azul medio (acciones y datos) */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #8fbaf0;
+  --color-brand-400: #5a96dc;
+  --color-brand-500: #2f74c0;
+  --color-brand-600: #1f5fa8;
+  --color-brand-700: #184c87;
+
+  /* Naranja moderado (acentos) */
+  --color-accent-50: #fff4e8;
+  --color-accent-100: #fde5cc;
+  --color-accent-400: #f09a4a;
+  --color-accent-500: #e8791a;
+  --color-accent-600: #c9650f;
+  --color-accent-700: #9f4f0c;
+
+  --color-surface: #f3f5f9;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-surface);
+  color: #0f1b2d;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Números tabulares en tablas e indicadores para que las cifras alineen */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+dialog::backdrop {
+  background: rgb(8 26 48 / 0.55);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animar-aparecer {
+  animation: aparecer 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animar-aparecer {
+    animation: none;
+  }
+}
+
+/* ---------- Impresión (talonarios, registros y reportes) ---------- */
+.solo-impresion {
+  display: none;
+}
+@page apaisada {
+  size: A4 landscape;
+  margin: 10mm;
+}
+.pagina-apaisada {
+  page: apaisada;
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-imprimir {
+    display: none !important;
+  }
+  .solo-impresion {
+    display: block;
+  }
+  .imprimir-sin-sombra {
+    box-shadow: none !important;
+    border-color: #cbd5e1 !important;
+  }
+  .contenedor-impresion {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  table {
+    page-break-inside: auto;
+  }
+  /* Reportes anchos: sin scroll horizontal y con texto compacto para que quepan todas las columnas */
+  .tabla-reporte {
+    overflow: visible !important;
+  }
+  .tabla-reporte table {
+    table-layout: auto;
+    width: 100%;
+  }
+  .tabla-reporte th,
+  .tabla-reporte td {
+    white-space: normal !important;
+    padding: 3px 4px !important;
+    font-size: 8.5px !important;
+    line-height: 1.25;
+  }
+  .tabla-reporte th.tabular,
+  .tabla-reporte td.tabular {
+    white-space: nowrap !important;
+    word-break: keep-all;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr {
+    page-break-inside: avoid;
+  }
+}
